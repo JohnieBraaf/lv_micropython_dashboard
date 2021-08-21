@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Windows hidden volume information
+System\ Volume\ Information/IndexerVolumeGuid
+System\ Volume\ Information/WPSettings.dat

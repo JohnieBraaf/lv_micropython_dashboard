@@ -1,6 +1,7 @@
 import machine
 import pyb
 import lvgl as lv
+import os
 
 pyb.country('US') # ISO 3166-1 Alpha-2 code, eg US, GB, DE, AU
 pyb.main('main.py') # main script to run after this one

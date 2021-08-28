@@ -2,6 +2,8 @@ import machine
 import lvgl as lv
 from style import ColorStyle, ShadowStyle
 
+from console import Console
+
 class Page_Test:
     def __init__(self, app, page):
         self.app = app
@@ -20,7 +22,7 @@ class Page_Test:
         #self.image_jan.set_size(200,200)
         #self.image_jan.align(page, lv.ALIGN.CENTER, 13, 6)
 
-        self.console = lv.textarea(page)
+        self.console = Console(page)
         self.console.set_size(300, 200)
         self.console.align(lv.ALIGN.TOP_LEFT, 10, 10)
 
@@ -36,6 +38,20 @@ class Page_Test:
         self.reset_label.set_text("Reset")
         self.reset_label.align(lv.ALIGN.CENTER, 0, 0)
 
+        # back button
+        self.back_btn = lv.btn(page)
+        self.back_btn.set_size(50,50)
+        self.back_btn.add_flag(lv.obj.FLAG.CHECKABLE)
+        self.back_btn.align(lv.ALIGN.TOP_RIGHT, 10, 50)
+        self.back_btn.add_event_cb(self.on_back_btn, lv.EVENT.CLICKED, None)
+
+        self.back_label = lv.label(self.back_btn)
+        self.back_label.set_text("Back")
+        self.back_label.align(lv.ALIGN.CENTER, 0, 0)
+
 
     def on_reset_btn(self, event):
         machine.reset()
+
+    def on_back_btn(self, event):
+        self.console.del_char()

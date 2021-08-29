@@ -31,13 +31,10 @@ class AdvancedDemoApplication:
 import io
 
 import time
-async def heartbeat(console, repl):
-    interval = 1000 # miliseconds
+async def heartbeat(console, repl, page):
+    interval = 500 # miliseconds
     last = time.ticks_ms()
     while True:
-        #print('test')
-        x = repl.buf.get_text()
-        console.add_text(x)
         next = last + interval
         sleep = next - time.ticks_ms()
         if sleep > 0:
@@ -48,12 +45,20 @@ async def heartbeat(console, repl):
             #print('ROBO: running late')
             last = time.ticks_ms()
 
+        if repl.buf.dirty_read:
+            repl.console.set_text(repl.buf.get_text(True))
+            repl.buf.read_text() # flag all as read
+        repl.console.add_text(repl.buf.read_text())
+
+        page.spinbox.set_value(repl.buf.count)
+        page.spinbox2.set_value(repl.buf.lines_count)
+
 from console import REPL
 app = AdvancedDemoApplication()
 repl = REPL(app.screen_main.page_test.console)
 os.dupterm(repl, 2)
 
 loop = uasyncio.get_event_loop()
-loop.create_task(heartbeat(app.screen_main.page_test.console, repl))
-loop.run_forever()
-loop.close()
+loop.create_task(heartbeat(app.screen_main.page_test.console, repl, app.screen_main.page_test))
+#loop.run_forever()
+#loop.close()

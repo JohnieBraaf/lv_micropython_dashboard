@@ -2,8 +2,6 @@ import machine
 import lvgl as lv
 from style import ColorStyle, ShadowStyle
 
-from console import Console
-
 class Page_Test:
     def __init__(self, app, page):
         self.app = app
@@ -22,9 +20,10 @@ class Page_Test:
         #self.image_jan.set_size(200,200)
         #self.image_jan.align(page, lv.ALIGN.CENTER, 13, 6)
 
-        self.console = Console(page)
+        self.console = lv.textarea(page)
         self.console.set_size(300, 200)
         self.console.align(lv.ALIGN.TOP_LEFT, 10, 10)
+        self.console.set_cursor_click_pos(False)
 
         #self.console.add_text('test')
 
@@ -49,9 +48,29 @@ class Page_Test:
         self.back_label.set_text("Back")
         self.back_label.align(lv.ALIGN.CENTER, 0, 0)
 
+        self.spinbox = lv.spinbox(page)
+        self.spinbox.set_range(-1000,90000)
+        self.spinbox.set_digit_format(5,0)
+        self.spinbox.set_width(100)
+        self.spinbox.align(lv.ALIGN.TOP_RIGHT, 10, 100)
+
+        self.spinbox2 = lv.spinbox(page)
+        self.spinbox2.set_range(-1000,90000)
+        self.spinbox2.set_digit_format(5,0)
+        self.spinbox2.set_width(100)
+        self.spinbox2.align(lv.ALIGN.TOP_RIGHT, 10, 150)
+
 
     def on_reset_btn(self, event):
         machine.reset()
 
     def on_back_btn(self, event):
         self.console.del_char()
+
+    def increment_event_cb(self, source,evt):
+            if evt == lv.EVENT.SHORT_CLICKED or evt == lv.EVENT.LONG_PRESSED_REPEAT:
+                spinbox.increment()
+
+    def decrement_event_cb(self, source,evt):
+        if evt == lv.EVENT.SHORT_CLICKED or evt == lv.EVENT.LONG_PRESSED_REPEAT:
+            spinbox.decrement()

@@ -15,8 +15,8 @@ class Screen_Main(lv.obj):
         super().__init__(*args, **kwds)
         self.theme = BaseTheme()
         self.tabview = lv.tabview(self, lv.DIR.TOP, 20)
-        self.page_test = Page_Test(self.app, self.tabview.add_tab("Test"))
         self.page_simple = Page_Dashboard(self.app, self.tabview.add_tab("Dashboard"))
+        self.page_test = Page_Test(self.app, self.tabview.add_tab("Test"))
         self.page_buttons = Page_Controls(self.app, self.tabview.add_tab("Controls"))
         self.page_chart = Page_Chart(self.app, self.tabview.add_tab("Chart"))
 

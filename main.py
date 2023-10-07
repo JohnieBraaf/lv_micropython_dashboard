@@ -3,10 +3,10 @@ from lv_utils import event_loop
 from display import Display
 from theme import BaseTheme
 
-from page_dashboard import Page_Dashboard
-from page_controls import Page_Controls
-from page_chart import Page_Chart
-from page_test import Page_Test
+from pages.page_dashboard import Page_Dashboard
+from pages.page_controls import Page_Controls
+from pages.page_chart import Page_Chart
+from pages.page_test import Page_Test
 import uasyncio
 
 class Screen_Main(lv.obj):
